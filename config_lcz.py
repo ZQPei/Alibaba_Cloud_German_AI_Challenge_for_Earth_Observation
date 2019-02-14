@@ -2,12 +2,13 @@ import os.path as osp
 
 model_root = './checkpoints'
 data_root = 'data'
-results_root = '/data/pzq/tianchi/data/'
+specific_name = '0214'
+results_root = 'results'
 test_file = osp.join(data_root, 'round2_test_b_20190211.h5')
 
 
-submit_dir = osp.join(results_root, 'submit')
-score_dir = osp.join(results_root, 'score')
+submit_dir = osp.join(results_root, specific_name, 'submit')
+score_dir = osp.join(results_root, specific_name, 'score')
 
 # LOCAL = True
 # TEST_B = True

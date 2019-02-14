@@ -3,6 +3,7 @@
 *.ckpt
 *.h5
 *.pyc
+*.csv
 
 results/
 model/
