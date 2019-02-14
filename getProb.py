@@ -43,6 +43,7 @@ def main():
     out_path = OUT_DIR+'/'+SPECIFIC_NAME+"/prob/"
 
     folder_list = [x for x in os.listdir(MODEL_DIR)]
+    folder_list.sort()
     for folder in folder_list:
         print("Predicting {}...".format(folder))
         dir_path = out_path+folder
