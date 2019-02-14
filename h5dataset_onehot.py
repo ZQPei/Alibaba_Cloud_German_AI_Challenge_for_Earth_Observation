@@ -118,6 +118,7 @@ class RoundDataset(Dataset):
 
         # test time augmentation
         self.aug = aug
+        self.randomCrop = H5RandomCrop(32, 4)
         self.Hflip = H5HorizontalFlip()
         self.Vflip = H5VerticalFlip()
         self.Rotate = H5Rotate()
