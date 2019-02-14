@@ -21,5 +21,7 @@ def Vote():
     y_pred_mat = vector_toMat(y_pred)
     writeCSV(base_path + "result.csv", y_pred_mat)
 
+    print(y_pred_mat.sum(axis=0))
+
 if __name__ == "__main__":
     Vote()
