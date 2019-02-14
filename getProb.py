@@ -10,18 +10,22 @@ from h5dataset_onehot import H5Dataset, RoundDataset
 
 from config import *
 from utils import progress_bar
+from timer import Timer
 
 os.environ['CUDA_VISIBLE_DEVICES'] = CUDA_VISIBLE_DEVICES
 device = torch.device("cuda")
 
 # forward function
 def Forward(net, dataset, description=""):
+    t = Timer()
+    
     dataLoader = torch.utils.data.DataLoader(dataset, batch_size=TEST_BATCH_SIZE, shuffle=False)
 
     y_pred_prob = torch.tensor([])
     total = len(dataLoader.dataset)
     with torch.no_grad():
         for idx, inputs in enumerate(dataLoader):
+            t.tic()
             inputs = inputs.to(device)
             # import ipdb; ipdb.set_trace()
             outputs = net(inputs)
@@ -29,7 +33,8 @@ def Forward(net, dataset, description=""):
             y_pred_prob = torch.cat([y_pred_prob, outputs.to("cpu")], dim=0)
 
             num_batch = inputs.shape[0]
-            progress_bar(idx*dataLoader.batch_size+num_batch, total, description=description)
+            t.toc()
+            progress_bar(idx*dataLoader.batch_size+num_batch, total, description=description, time=t.total_time)
 
     print()
     return y_pred_prob
@@ -57,8 +62,6 @@ def main():
                 tta_prob.append(y_pred_prob)
             tta_prob = torch.stack(tta_prob).sum(dim=0)
             np.save(dir_path+"{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
-        else:
-            
 
         del net
 

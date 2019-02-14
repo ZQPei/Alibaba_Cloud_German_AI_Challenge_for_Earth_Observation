@@ -10,8 +10,10 @@ def GetAbsoluteFilePath(folderpath):
             absolute_file_path_list.append(filepath)
     return absolute_file_path_list
 
-def progress_bar(current, total, description=""):
+def progress_bar(current, total, description="", time=None):
     string = "\r%s\tProgress[%.1f%%]:%d/%d "%(description, 100*current/total, current, total)
+    if time:
+        string += "\t time:%d"%(time)
     sys.stdout.write(string)
     sys.stdout.flush()
 
