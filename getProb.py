@@ -15,7 +15,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = CUDA_VISIBLE_DEVICES
 device = torch.device("cuda")
 
 # forward function
-def Forward(net, dataset):
+def Forward(net, dataset, description=""):
     dataLoader = torch.utils.data.DataLoader(dataset, batch_size=TEST_BATCH_SIZE, shuffle=False)
 
     y_pred_prob = torch.tensor([])
@@ -29,14 +29,15 @@ def Forward(net, dataset):
             y_pred_prob = torch.cat([y_pred_prob, outputs.to("cpu")], dim=0)
 
             num_batch = inputs.shape[0]
-            progress_bar(idx*dataLoader.batch_size+num_batch, total)
+            progress_bar(idx*dataLoader.batch_size+num_batch, total, description=description)
 
     return y_pred_prob
 
 def main():
     from utils import GetAbsoluteFilePath
     model_file_list = GetAbsoluteFilePath('model')
-    for model_file in model_file_list:
+    import tqdm
+    for model_file in tqdm.tqdm(model_file_list):
         # load net
         net = torch.load(model_file)
         net.eval()
@@ -47,13 +48,11 @@ def main():
         if USE_TTA:
             tta_prob = []
             for i, tta_aug in enumerate(TTA_AUG):
-                print(i , tta_aug)
                 testset = RoundDataset(TEST_FILE, aug=tta_aug)
-                y_pred_prob = Forward(net, testset)
+                y_pred_prob = Forward(net, testset, "%d %s"%(i, tta_aug))
                 tta_prob.append(y_pred_prob)
-                print()
             tta_prob = torch.stack(tta_prob).sum(dim=0)
-            np.save(OUT_DIR+"/{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
+            np.save(OUT_DIR+'/'+SPECIFIC_NAME+"/prob/{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
         else:
             pass
 

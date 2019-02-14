@@ -2,6 +2,7 @@ DATE = "0212"
 DATA_DIR= 'data'
 MODEL_DIR = 'model'
 OUT_DIR = 'results'
+SPECIFIC_NAME = '0214'
 CUDA_VISIBLE_DEVICES = '0'
 NETS = ['cbam', 'resnext', 'densenet', 'SENet', 'xception']
 CLASSES = 17

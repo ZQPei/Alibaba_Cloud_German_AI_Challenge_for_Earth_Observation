@@ -1,5 +1,6 @@
 import os
 import sys
+import numpy as np
 
 def GetAbsoluteFilePath(folderpath):
     absolute_file_path_list = []
@@ -9,9 +10,22 @@ def GetAbsoluteFilePath(folderpath):
             absolute_file_path_list.append(filepath)
     return absolute_file_path_list
 
-def progress_bar(current, total):
-    sys.stdout.write("\rProgress[%.1f%%]:%d/%d \t\t"%(100*current/total, current, total))
+def progress_bar(current, total, description=""):
+    string = "\rProgress[%.1f%%]:%d/%d %s"%(100*current/total, current, total, description)
+    sys.stdout.write(string)
     sys.stdout.flush()
+
+def vector_toMat(y_pred_vec):
+    """
+    Convert y_pred vector to matrix
+    Input:
+        y_pred_vec: Nx1 
+    Output:
+        y_pred_mat: Nx17
+    """
+    num_classes = y_pred_vec.max()+1
+    y_pred_mat = (y_pred_vec.reshape(-1,1)==np.arange(num_classes))*1
+    return y_pred_mat
 
 if __name__ == "__main__":
     files = GetAbsoluteFilePath('model')
