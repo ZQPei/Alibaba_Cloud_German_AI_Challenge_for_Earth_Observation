@@ -18,7 +18,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from h5dataset import H5Dataset
 from sklearn.metrics import classification_report
-import net
+
+from net import xception
 
 import argparse
 parser = argparse.ArgumentParser(description='Tianchi Competition training using different networks')
@@ -42,7 +43,7 @@ best_acc = 0.
 
  
 # net definition
-net = net.xception.Xception()
+net = xception.Xception()
 # net = torch.load('checkpoint/Xception/xception0125.pkl')
 
 # compute accelerating 
