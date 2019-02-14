@@ -45,6 +45,9 @@ def main():
 
         # dataset
         print("Using {}...".format(os.path.basename(model_file)))
+        dir_path = OUT_DIR+'/'+SPECIFIC_NAME+"/prob/"
+        os.mkdir(dir_path)
+
         if USE_TTA:
             tta_prob = []
             for i, tta_aug in enumerate(TTA_AUG):
@@ -52,7 +55,7 @@ def main():
                 y_pred_prob = Forward(net, testset, "%d %s"%(i, tta_aug))
                 tta_prob.append(y_pred_prob)
             tta_prob = torch.stack(tta_prob).sum(dim=0)
-            np.save(OUT_DIR+'/'+SPECIFIC_NAME+"/prob/{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
+            np.save(dir_path+"{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
         else:
             pass
 
