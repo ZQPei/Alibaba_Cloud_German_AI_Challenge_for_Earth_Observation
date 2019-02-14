@@ -42,7 +42,7 @@ best_acc = 0.
 
  
 # net definition
-net = net.xception.xception(num_classes=NUM_CLASSES)
+net = net.xception.Xception()
 # net = torch.load('checkpoint/Xception/xception0125.pkl')
 
 # compute accelerating 
