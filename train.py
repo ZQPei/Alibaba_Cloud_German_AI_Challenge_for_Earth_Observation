@@ -97,13 +97,13 @@ def train(epoch):
     y_train_pred = torch.tensor([]).long()
     start = time.time()
     for idx, (inputs, labels) in enumerate(trainloader):
-        inputs,labels = inputs.to(device), labels.to(device)
-        # inputs, targets_a, targets_b, lam = mixup_data(inputs, labels, alpha=1.0)
+        # inputs,labels = inputs.to(device), labels.to(device)
+        inputs, targets_a, targets_b, lam = mixup_data(inputs, labels, alpha=1.0)
         outputs = net(inputs)
 
         optimizer.zero_grad()
-        # loss = mixup_criterion(criterion, outputs, targets_a, targets_b, lam)        
-        loss = criterion(outputs, labels)
+        loss = mixup_criterion(criterion, outputs, targets_a, targets_b, lam)        
+        # loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
         schedular.step()
