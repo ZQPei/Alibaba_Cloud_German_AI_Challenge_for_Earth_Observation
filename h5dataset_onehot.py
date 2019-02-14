@@ -13,13 +13,13 @@ from torch.utils.data import Dataset
 import torchvision
 import random
 
-from h5transform import H5RandomCrop, H5RandomHorizontalFlip, H5RandomVerticalFlip, H5RandomRotate
+from h5transform import H5RandomCrop, H5RandomHorizontalFlip, H5RandomVerticalFlip, H5RandomRotate, H5HorizontalFlip, H5VerticalFlip, H5Rotate
 
 MEAN_FILE = "npy/mean_new.npy"
 STD_FILE = "npy/std_new.npy"
 
 class H5Dataset(Dataset):
-    def __init__(self, h5file, istrain=False, data_mode="s2", label_mode="default"):
+    def __init__(self, h5file, istrain=False, data_mode="s2"):
         super(H5Dataset, self).__init__()
         fid = h5py.File(h5file, 'r')
 
@@ -49,10 +49,6 @@ class H5Dataset(Dataset):
             self.randomVflip = H5RandomVerticalFlip()
             self.randomRotate = H5RandomRotate()
 
-        self.label_mode = label_mode
-        if label_mode == "cluster":
-            self._get_label = np.array([0,1,2,0,0,3,4,5,4,4, 6,7,7,8,7,7,9],dtype=np.int)
-
     def __getitem__(self, index):
         '''
             data: [32x32x18] numpy.ndarray
@@ -71,11 +67,6 @@ class H5Dataset(Dataset):
         label = self.labels[index]
         
         data_torch = self.transform(data)
-
-        if self.label_mode == "only_urban_rural":
-            label = 0 if label < 10 else 1
-        elif self.label_mode == "cluster":
-            label = self.getLabel(label)
 
         return data_torch, label
 
@@ -102,13 +93,11 @@ class H5Dataset(Dataset):
         data_torch = self.Normalize(data_torch)
 
         return data_torch
-    
-    def getLabel(self, label):
-        return self._get_label[label]
 
-class Round1Dataset(Dataset):
-    def __init__(self, h5file, data_mode="s2"):
-        super(Round1Dataset, self).__init__()
+
+class RoundDataset(Dataset):
+    def __init__(self, h5file, data_mode="s2", aug="Ori"):
+        super(RoundDataset, self).__init__()
         fid = h5py.File(h5file, 'r')
 
         self.s1 = fid['sen1']
@@ -126,6 +115,12 @@ class Round1Dataset(Dataset):
         else:
             raise ValueError("data mode not found!")
         self.Normalize = torchvision.transforms.Normalize(self.mean, self.std)
+
+        # test time augmentation
+        self.aug = aug
+        self.Hflip = H5HorizontalFlip()
+        self.Vflip = H5VerticalFlip()
+        self.Rotate = H5Rotate()
 
     def __getitem__(self, index):
         '''
@@ -157,6 +152,40 @@ class Round1Dataset(Dataset):
         assert isinstance(data, np.ndarray), "data should be np.ndarray type"
 
         data_torch = torch.from_numpy(data).float().permute(2,0,1)
+
+        # test time augmentation
+        if self.aug == 'Ori':
+            data_torch = data_torch
+        if self.aug == 'Ori_Hflip':
+            data_torch = self.Hflip(data_torch)
+        if self.aug == 'Ori_Vflip':
+            data_torch = self.Vflip(data_torch)
+        if self.aug == 'Ori_Rotate_90':
+            data_torch = self.Rotate(data_torch,90)
+        if self.aug == 'Ori_Rotate_180':
+            data_torch = self.Rotate(data_torch,180)
+        if self.aug == 'Ori_Rotate_270':
+            data_torch = self.Rotate(data_torch,270)
+
+        if self.aug == 'Crop':
+            data_torch = self.randomCrop(data_torch)
+            data_torch = data_torch
+        if self.aug == 'Crop_Hflip':
+            data_torch = self.randomCrop(data_torch)
+            data_torch = self.Hflip(data_torch)
+        if self.aug == 'Crop_Vflip':
+            data_torch = self.randomCrop(data_torch)
+            data_torch = self.Vflip(data_torch)
+        if self.aug == 'Crop_Rotate_90':
+            data_torch = self.randomCrop(data_torch)
+            data_torch = self.Rotate(data_torch,90)
+        if self.aug == 'Crop_Rotate_180':
+            data_torch = self.randomCrop(data_torch)
+            data_torch = self.Rotate(data_torch,180)
+        if self.aug == 'Crop_Rotate_270':
+            data_torch = self.randomCrop(data_torch)
+            data_torch = self.Rotate(data_torch,270)
+
         # maybe normalization after randomcrop or randomflip will be better
         data_torch = self.Normalize(data_torch)
 

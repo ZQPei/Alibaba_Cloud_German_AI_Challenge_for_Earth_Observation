@@ -6,16 +6,18 @@ import torchvision
 import os
 import numpy as np
 
-from h5dataset_onehot import H5Dataset, Round1Dataset
+from h5dataset_onehot import H5Dataset, RoundDataset
 
 from config import *
 from utils import progress_bar
 
 os.environ['CUDA_VISIBLE_DEVICES'] = CUDA_VISIBLE_DEVICES
-device = torch.device("cuda:0")
+device = torch.device("cuda")
 
 # forward function
-def GetProb(net, dataLoader):
+def Forward(net, dataset):
+    dataLoader = torch.utils.data.DataLoader(dataset, batch_size=TEST_BATCH_SIZE, shuffle=False)
+
     y_pred_prob = torch.tensor([])
     total = len(dataLoader.dataset)
     with torch.no_grad():
@@ -31,21 +33,30 @@ def GetProb(net, dataLoader):
 
     return y_pred_prob
 
+def main():
+    from utils import GetAbsoluteFilePath
+    model_file_list = GetAbsoluteFilePath('model')
+    for model_file in model_file_list:
+        # load net
+        net = torch.load(model_file)
+        net.eval()
+        cudnn.benchmark = True
 
+        # dataset
+        print("Using {}...".format(os.path.basename(model_file)))
+        if USE_TTA:
+            tta_prob = []
+            for i, tta_aug in enumerate(TTA_AUG):
+                print("\t",i , tta_aug)
+                testset = RoundDataset(TEST_FILE, aug=tta_aug)
+                y_pred_prob = Forward(net, testset)
+                tta_prob.append(y_pred_prob)
+            tta_prob = torch.stack(tta_prob).sum(dim=0)
+            np.save(OUT_DIR+"/{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
+        else:
+            pass
 
-# dataloader
-testset = Round1Dataset(TEST_FILE)
-testLoader = torch.utils.data.DataLoader(testset, batch_size=TEST_BATCH_SIZE, shuffle=False)
+        del net
 
-# load net
-from utils import GetAbsoluteFIlePath
-model_file_list = GetAbsoluteFIlePath('model')
-for model_file in model_file_list:
-    net = torch.load(model_file)
-    net.eval()
-    cudnn.benchmark = True
-
-    y_pred_prob = GetProb(net, testLoader)
-    np.save(OUT_DIR+"/{}.npy".format(os.path.basename(model_file).split('.')[0]), y_pred_prob)
-
-    del net
+if __name__ == "__main__":
+    main()

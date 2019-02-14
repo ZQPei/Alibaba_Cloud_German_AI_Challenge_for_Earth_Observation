@@ -1,7 +1,7 @@
 import os
 import sys
 
-def GetAbsoluteFIlePath(folderpath):
+def GetAbsoluteFilePath(folderpath):
     absolute_file_path_list = []
     for folderpath, subfolderlist, filelist in os.walk(folderpath):
         for filename in filelist:
@@ -10,9 +10,9 @@ def GetAbsoluteFIlePath(folderpath):
     return absolute_file_path_list
 
 def progress_bar(current, total):
-    sys.stdout.write("\rProgress[%.1f%%]:%d/%d "%(100*current/total, current, total))
+    sys.stdout.write("\rProgress[%.1f%%]:%d/%d \t\t"%(100*current/total, current, total))
     sys.stdout.flush()
 
 if __name__ == "__main__":
-    files = GetAbsoluteFIlePath('model')
+    files = GetAbsoluteFilePath('model')
     print(files)

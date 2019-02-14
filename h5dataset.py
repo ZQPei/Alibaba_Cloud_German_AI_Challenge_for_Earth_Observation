@@ -105,9 +105,9 @@ class H5Dataset(Dataset):
     def getLabel(self, label):
         return self._get_label[label]
 
-class Round1Dataset(Dataset):
+class RoundDataset(Dataset):
     def __init__(self, h5file, data_mode="s2"):
-        super(Round1Dataset, self).__init__()
+        super(RoundDataset, self).__init__()
         fid = h5py.File(h5file, 'r')
 
         self.s1 = fid['sen1']
