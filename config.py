@@ -22,5 +22,4 @@ TRAIN_BATCH_SIZE = 32
 TEST_FILE = 'data/round2_test_b_20190211.h5'
 TEST_BATCH_SIZE = 128
 USE_TTA = True
-TTA_AUG = ['Ori','Ori_Hflip','Ori_Vflip','Ori_Rotate_90','Ori_Rotate_180','Ori_Rotate_270',
-            'Crop','Crop_Hflip','Crop_Vflip','Crop_Rotate_90','Crop_Rotate_180','Crop_Rotate_270']
+TTA_AUG = ['Ori']
