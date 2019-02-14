@@ -1,0 +1,10 @@
+*.npy
+*.pkl
+*.h5
+*.pyc
+
+results/
+model/
+data/
+__pycache__/
+
