@@ -58,6 +58,9 @@ def main():
 
             # dataset
             print("Predicting {}...".format(os.path.basename(model_file)))
+            sub_dir_path = os.path.join(dir_path,os.path.basename(model_file).split('.')[0])
+            if not os.path.exists(sub_dir_path):
+                os.makedirs(sub_dir_path)
 
             if USE_TTA:
                 tta_prob = []
@@ -67,7 +70,7 @@ def main():
                     tta_prob.append(y_pred_prob)
                 tta_prob = torch.stack(tta_prob).sum(dim=0)/len(TTA_AUG)
                 prob.append(tta_prob)
-                np.save(dir_path+"/{}/{}.npy".format(os.path.basename(model_file).split('.')[0], os.path.basename(model_file).split('.')[0]), tta_prob.numpy())
+                np.save(sub_dir_path+"/{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob.numpy())
             
             del net
 
