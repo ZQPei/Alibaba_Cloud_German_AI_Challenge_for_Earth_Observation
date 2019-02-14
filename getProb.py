@@ -46,7 +46,8 @@ def main():
         # dataset
         print("Using {}...".format(os.path.basename(model_file)))
         dir_path = OUT_DIR+'/'+SPECIFIC_NAME+"/prob/"
-        os.mkdir(dir_path)
+        if not os.path.exists(dir_path):
+            os.mkdir(dir_path)
 
         if USE_TTA:
             tta_prob = []
