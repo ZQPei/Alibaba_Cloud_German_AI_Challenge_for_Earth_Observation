@@ -44,6 +44,7 @@ def main():
 
     folder_list = [x for x in os.listdir(MODEL_DIR)]
     for folder in folder_list:
+        print("Predicting {}...".format(folder))
         dir_path = out_path+folder
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
@@ -57,10 +58,7 @@ def main():
             cudnn.benchmark = True
 
             # dataset
-            print("Predicting {}...".format(os.path.basename(model_file)))
-            sub_dir_path = os.path.join(dir_path,os.path.basename(model_file).split('.')[0])
-            if not os.path.exists(sub_dir_path):
-                os.makedirs(sub_dir_path)
+            print("Using model {}...".format(os.path.basename(model_file)))
 
             if USE_TTA:
                 tta_prob = []
@@ -70,12 +68,12 @@ def main():
                     tta_prob.append(y_pred_prob)
                 tta_prob = torch.stack(tta_prob).sum(dim=0)/len(TTA_AUG)
                 prob.append(tta_prob)
-                np.save(sub_dir_path+"/{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob.numpy())
+                np.save(dir_path+"/{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob.numpy())
             
             del net
 
         prob = torch.stack(prob).sum(dim=0)/len(model_file_list)
-        np.save(dir_path+"/{}.npy".format(folder), prob.numpy())
+        np.save(out_path+"/{}.npy".format(folder), prob.numpy())
 
 if __name__ == "__main__":
     main()
