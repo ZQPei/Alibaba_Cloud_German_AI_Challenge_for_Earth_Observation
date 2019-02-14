@@ -9,7 +9,7 @@ import numpy as np
 from h5dataset_onehot import H5Dataset, RoundDataset
 
 from config import *
-from utils import progress_bar
+from utils import progress_bar, GetAbsoluteFilePath
 from timer import Timer
 
 os.environ['CUDA_VISIBLE_DEVICES'] = CUDA_VISIBLE_DEVICES
@@ -40,30 +40,35 @@ def Forward(net, dataset, description=""):
     return y_pred_prob
 
 def main():
-    from utils import GetAbsoluteFilePath
-    model_file_list = GetAbsoluteFilePath('model')
-    for model_file in model_file_list:
-        # load net
-        net = torch.load(model_file)
-        net.eval()
-        cudnn.benchmark = True
+    out_path = OUT_DIR+'/'+SPECIFIC_NAME+"/prob/"
 
-        # dataset
-        print("Using {}...".format(os.path.basename(model_file)))
-        dir_path = OUT_DIR+'/'+SPECIFIC_NAME+"/prob/"
-        if not os.path.exists(dir_path):
-            os.makedirs(dir_path)
+    folder_list = [x for x in os.listdir(MODEL_DIR)]
+    for folder in folder_list:
+        model_file_list = GetAbsoluteFilePath(os.path.join(MODEL_DIR, folder))
+        for model_file in model_file_list:
+            # load net
+            net = torch.load(model_file)
+            net.eval()
+            cudnn.benchmark = True
 
-        if USE_TTA:
-            tta_prob = []
-            for i, tta_aug in enumerate(TTA_AUG):
-                testset = RoundDataset(TESTSET_FILE, aug=tta_aug)
-                y_pred_prob = Forward(net, testset, "%d %s"%(i, tta_aug))
-                tta_prob.append(y_pred_prob)
-            tta_prob = torch.stack(tta_prob).sum(dim=0)
-            np.save(dir_path+"{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
+            # dataset
+            print("Using {}...".format(os.path.basename(model_file)))
+            dir_path = out_path+'/'+folder
+            if not os.path.exists(dir_path):
+                os.makedirs(dir_path)
 
-        del net
+            import ipdb; ipdb.set_trace()
+
+            if USE_TTA:
+                tta_prob = []
+                for i, tta_aug in enumerate(TTA_AUG):
+                    testset = RoundDataset(TESTSET_FILE, aug=tta_aug)
+                    y_pred_prob = Forward(net, testset, "%d %s"%(i, tta_aug))
+                    tta_prob.append(y_pred_prob)
+                tta_prob = torch.stack(tta_prob).sum(dim=0)
+                np.save(dir_path+"/{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
+
+            del net
 
 if __name__ == "__main__":
     main()
