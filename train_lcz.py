@@ -17,7 +17,7 @@ from modules.lcz_dense_net import densenet121, densenet169, densenet201, densene
 from modules.scheduler import RestartCosineAnnealingLR, CosineAnnealingLR
 
 from modules.losses import FocalCE
-from config import  *
+from config_lcz import  *
 
 SEED = 502
 T = 1.5

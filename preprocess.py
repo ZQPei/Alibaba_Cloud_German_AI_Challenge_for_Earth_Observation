@@ -6,8 +6,8 @@ import numpy as np
 from tqdm import tqdm
 from dataloader import H5DataSource, MyDataLoader
 from torchvision import transforms
-from h5transform import *
-from config import  *
+from h5transform_lcz import *
+from config_lcz import  *
 
 
 def preprocess_batch(x_b):

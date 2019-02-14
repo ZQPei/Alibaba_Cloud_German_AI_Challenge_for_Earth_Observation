@@ -13,7 +13,7 @@ from modules.lcz_res_net import resnet10, resnet18, resnet34, resnet50
 from modules.lcz_senet import se_resnet_ys, se_resnet10_fc512, se_resnet15_fc512
 from modules.lcz_xception import Xception
 from modules.lcz_dense_net import densenet_ys, densenet121, densenet169, densenet201, densenet161
-from config import *
+from config_lcz import *
 
 
 if __name__ == '__main__':

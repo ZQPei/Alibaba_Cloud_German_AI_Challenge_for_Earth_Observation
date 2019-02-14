@@ -18,7 +18,6 @@ from net import resnext
 from net import densenet
 from net import se_resnext
 
-
 from config import *
 
 os.environ["CUDA_VISIBLE_DEVICES"] = CUDA_VISIBLE_DEVICES
@@ -175,9 +174,6 @@ def test(epoch):
         # torch.save(checkpoint, './{}/ckpt.t7'.format(save_dir))
         torch.save(net,'./{}/net_{:03d}.pkl'.format(save_dir,epoch+1))
 
-
-def getRound1ResultCSV():
-    pass
     
 
 # plot figure
