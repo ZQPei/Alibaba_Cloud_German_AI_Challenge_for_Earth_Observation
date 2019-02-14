@@ -97,7 +97,7 @@ def train(epoch):
     y_train_pred = torch.tensor([]).long()
     start = time.time()
     for idx, (inputs, labels) in enumerate(trainloader):
-        # inputs,labels = inputs.to(device), labels.to(device)
+        inputs, labels = inputs.to(device), labels.to(device)
         inputs, targets_a, targets_b, lam = mixup_data(inputs, labels, alpha=1.0)
         outputs = net(inputs)
 
