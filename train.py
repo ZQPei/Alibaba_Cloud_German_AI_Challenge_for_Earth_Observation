@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-'''
- * @Author: ZQ.Pei 
- * @Date: 2018-11-24 23:09:28 
- * @Last Modified by:   ZQ.Pei 
- * @Last Modified time: 2018-11-24 23:09:28 
-'''
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -19,15 +11,13 @@ import numpy as np
 from h5dataset import H5Dataset
 from sklearn.metrics import classification_report
 
+from net import cbam
 from net import xception
+from net import resnet
+from net import resnext
+from net import densenet
+from net import se_resnext
 
-import argparse
-parser = argparse.ArgumentParser(description='Tianchi Competition training using different networks')
-# parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
-parser.add_argument('--resume', '-r',action='store_true', help='whether load existing params or not')
-# parser.add_argument('--gpu-id',default=0, type=int, help='which gpu')
-parser.add_argument('--parallel','-p',action='store_true',help='use dataparallel')
-args = parser.parse_args()
 
 from config import *
 
@@ -44,7 +34,7 @@ best_acc = 0.
  
 # net definition
 net = xception.Xception()
-# net = torch.load('checkpoint/Xception/xception0125.pkl')
+
 
 # compute accelerating 
 # if use_cuda:
@@ -75,7 +65,7 @@ testloader = torch.utils.data.DataLoader(testset,batch_size=TEST_BATCH_SIZE, shu
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(net.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM, weight_decay=GAMMA, dampening=0)
 schedular = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=MILESTONES, gamma=0.2, last_epoch=-1)
-print(args.lr)
+print(LEARNING_RATE)
 
 
 def mixup_data(x, y, alpha=1.0):
