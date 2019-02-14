@@ -52,13 +52,13 @@ def main():
         if USE_TTA:
             tta_prob = []
             for i, tta_aug in enumerate(TTA_AUG):
-                testset = RoundDataset(TEST_FILE, aug=tta_aug)
+                testset = RoundDataset(TESTSET_FILE, aug=tta_aug)
                 y_pred_prob = Forward(net, testset, "%d %s"%(i, tta_aug))
                 tta_prob.append(y_pred_prob)
             tta_prob = torch.stack(tta_prob).sum(dim=0)
             np.save(dir_path+"{}.npy".format(os.path.basename(model_file).split('.')[0]), tta_prob)
         else:
-            pass
+            
 
         del net
 

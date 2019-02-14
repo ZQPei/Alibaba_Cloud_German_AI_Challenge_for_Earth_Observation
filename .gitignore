@@ -1,10 +1,12 @@
 *.npy
 *.pkl
+*.ckpt
 *.h5
 *.pyc
 
 results/
 model/
 data/
+checkpoints/
 __pycache__/
 
