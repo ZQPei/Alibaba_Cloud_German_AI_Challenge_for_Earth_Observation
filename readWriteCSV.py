@@ -10,9 +10,9 @@ def readCSV(filename, dtype="int64"):
         print("Reading labels from {}...".format(filename))
         csvreader = csv.reader(foo, dialect='excel')
         label_mat = []
-        if dtype="int64":
+        if dtype=="int64":
             dtype = np.int64
-        elif dtype="float":
+        elif dtype=="float":
             dtype = np.float64
 
         for line in csvreader:
