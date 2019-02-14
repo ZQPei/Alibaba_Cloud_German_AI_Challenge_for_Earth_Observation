@@ -44,7 +44,7 @@ def main():
         cudnn.benchmark = True
 
         # dataset
-        print("Using {}...".format(os.path.basename(model_file)))
+        # print("Using {}...".format(os.path.basename(model_file)))
         dir_path = OUT_DIR+'/'+SPECIFIC_NAME+"/prob/"
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
