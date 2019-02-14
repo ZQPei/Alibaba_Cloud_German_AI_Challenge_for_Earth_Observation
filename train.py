@@ -57,9 +57,9 @@ net.to(device)
 
 
 trainset = H5Dataset(TRAINSET_FILE, istrain=True)
-testset = H5Dataset(TESTSET_FILE, istrain=False)
+# testset = H5Dataset(TESTSET_FILE, istrain=False)
 trainloader = torch.utils.data.DataLoader(trainset,batch_size=TRAIN_BATCH_SIZE, shuffle=True,num_workers=0)
-testloader = torch.utils.data.DataLoader(testset,batch_size=TEST_BATCH_SIZE, shuffle=False,num_workers=0)
+# testloader = torch.utils.data.DataLoader(testset,batch_size=TEST_BATCH_SIZE, shuffle=False,num_workers=0)
 
 
 criterion = nn.CrossEntropyLoss()
