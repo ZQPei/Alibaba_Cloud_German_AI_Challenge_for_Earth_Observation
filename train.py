@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from h5dataset import H5Dataset
 from sklearn.metrics import classification_report
-from net import *
+import net
 
 import argparse
 parser = argparse.ArgumentParser(description='Tianchi Competition training using different networks')
