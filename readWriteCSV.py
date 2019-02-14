@@ -1,13 +1,14 @@
 import csv
 import numpy as np
 
-def readCSV(filename, dtype="int64"):
+def readCSV(filename, dtype="int64", verbose=True):
     """
     Input: Str of csv filename
     Output: numpy.ndarray of Nx17
     """
     with open(filename, 'r') as foo:
-        print("Reading labels from {}...".format(filename))
+        if verbose:
+            print("Reading labels from {}...".format(filename))
         csvreader = csv.reader(foo, dialect='excel')
         label_mat = []
         if dtype=="int64":

@@ -23,7 +23,7 @@ def Vote():
     prob_file_list2 = [x for x in GetFilePath(base_path+"score") if x[-4:]=='.csv']
     y_pred_prob2 = []
     for prob_file in prob_file_list2:
-        prob = readCSV(prob_file, dtype="float")
+        prob = readCSV(prob_file, dtype="float", verbose=False)
         y_pred_prob2.append(prob)
     y_pred_prob2 = np.stack(y_pred_prob2).sum(axis=0)
 
