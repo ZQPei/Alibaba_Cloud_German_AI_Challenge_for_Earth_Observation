@@ -2,13 +2,13 @@ import os
 import sys
 import numpy as np
 
-def GetAbsoluteFilePath(folderpath):
-    absolute_file_path_list = []
+def GetFilePath(folderpath):
+    file_path_list = []
     for folderpath, subfolderlist, filelist in os.walk(folderpath):
         for filename in filelist:
             filepath = os.path.join(folderpath, filename)
-            absolute_file_path_list.append(filepath)
-    return absolute_file_path_list
+            file_path_list.append(filepath)
+    return file_path_list
 
 def progress_bar(current, total, description="", time=None):
     string = "\r%s\tProgress[%.1f%%]:%d/%d "%(description, 100*current/total, current, total)

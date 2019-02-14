@@ -9,7 +9,7 @@ import numpy as np
 from h5dataset_onehot import H5Dataset, RoundDataset
 
 from config import *
-from utils import progress_bar, GetAbsoluteFilePath
+from utils import progress_bar, GetFilePath
 from timer import Timer
 
 os.environ['CUDA_VISIBLE_DEVICES'] = CUDA_VISIBLE_DEVICES
@@ -44,7 +44,7 @@ def main():
 
     folder_list = [x for x in os.listdir(MODEL_DIR)]
     for folder in folder_list:
-        model_file_list = GetAbsoluteFilePath(os.path.join(MODEL_DIR, folder))
+        model_file_list = GetFilePath(os.path.join(MODEL_DIR, folder))
         for model_file in model_file_list:
             # load net
             net = torch.load(model_file)
@@ -53,7 +53,7 @@ def main():
 
             # dataset
             print("Using {}...".format(os.path.basename(model_file)))
-            dir_path = out_path+'/'+folder
+            dir_path = out_path+folder
             if not os.path.exists(dir_path):
                 os.makedirs(dir_path)
 
