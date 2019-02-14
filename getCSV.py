@@ -14,7 +14,7 @@ def Vote():
     # 1
     prob_file_list1 = [x for x in GetFilePath(base_path+"prob") if x[-4:]=='.npy']
     y_pred_prob1 = []
-    for prob_file in prob_file_list:
+    for prob_file in prob_file_list1:
         prob = np.load(prob_file)
         y_pred_prob1.append(prob)
     y_pred_prob1 = np.stack(y_pred_prob1).sum(axis=0)
