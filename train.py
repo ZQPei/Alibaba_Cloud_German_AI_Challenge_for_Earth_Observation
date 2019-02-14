@@ -27,30 +27,13 @@ save_dir = "checkpoint/Xception"
 use_cuda = True
 start_epoch = 0
 record = {'train_loss':[], 'train_err':[], 'test_loss':[], 'test_err':[]}
-#save_dir = os.path.join("checkpoint",args.save_dir)
 best_acc = 0.
 
- 
 # net definition
 net = xception.Xception()
 
-
 # compute accelerating 
-# if use_cuda:
-#     if args.parallel:
-#         net = torch.nn.DataParallel(net)
 cudnn.benchmark = True
-
-# if args.resume:
-#     assert os.path.isfile("./{}/ckpt.t7".format(save_dir)), "Error: no checkpoint file found!"
-#     print('Loading from {}/ckpt.t7'.format(save_dir))
-#     checkpoint = torch.load("./{}/ckpt.t7".format(save_dir))
-#     # import ipdb; ipdb.set_trace()
-#     net_dict = checkpoint['net_dict']
-#     net.load_state_dict(net_dict)
-#     best_acc = checkpoint['acc']
-#     start_epoch = checkpoint['epoch']
-#     record = checkpoint['record']
 
 net.to(device)
 
@@ -59,7 +42,6 @@ trainset = H5Dataset(TRAINSET_FILE, istrain=True)
 # testset = H5Dataset(TESTSET_FILE, istrain=False)
 trainloader = torch.utils.data.DataLoader(trainset,batch_size=TRAIN_BATCH_SIZE, shuffle=True,num_workers=0)
 # testloader = torch.utils.data.DataLoader(testset,batch_size=TEST_BATCH_SIZE, shuffle=False,num_workers=0)
-
 
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(net.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM, weight_decay=GAMMA, dampening=0)
