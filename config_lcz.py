@@ -1,9 +1,9 @@
 import os.path as osp
 
-model_root = 'path/to/model/root'
-data_root = '/path/to/data/root'
-results_root = '/path/to/result/root'
-test_file = '/path/to/test/file'
+model_root = './checkpoints'
+data_root = 'data'
+results_root = '/data/pzq/tianchi/data/'
+test_file = osp.join(data_root, 'round2_test_b_20190211.h5')
 
 
 submit_dir = osp.join(results_root, 'submit')
