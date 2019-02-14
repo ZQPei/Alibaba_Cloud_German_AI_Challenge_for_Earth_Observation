@@ -31,12 +31,12 @@ def Forward(net, dataset, description=""):
             num_batch = inputs.shape[0]
             progress_bar(idx*dataLoader.batch_size+num_batch, total, description=description)
 
+    print()
     return y_pred_prob
 
 def main():
     from utils import GetAbsoluteFilePath
     model_file_list = GetAbsoluteFilePath('model')
-    import tqdm
     for model_file in model_file_list:
         # load net
         net = torch.load(model_file)

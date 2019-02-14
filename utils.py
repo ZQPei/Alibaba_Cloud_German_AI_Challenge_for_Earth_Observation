@@ -11,7 +11,7 @@ def GetAbsoluteFilePath(folderpath):
     return absolute_file_path_list
 
 def progress_bar(current, total, description=""):
-    string = "\rProgress[%.1f%%]:%d/%d %s"%(100*current/total, current, total, description)
+    string = "\r%s\tProgress[%.1f%%]:%d/%d "%(description, 100*current/total, current, total)
     sys.stdout.write(string)
     sys.stdout.flush()
 
