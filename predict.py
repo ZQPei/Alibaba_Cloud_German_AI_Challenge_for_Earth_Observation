@@ -38,8 +38,8 @@ if __name__ == '__main__':
 
 		if not os.path.isdir(results_root):
 			os.mkdir(results_root)
-		submit_dir = os.path.join(results_root, 'submit')
-		score_dir = os.path.join(results_root, 'score')
+		submit_dir = os.path.join(results_root, specific_name, 'submit')
+		score_dir = os.path.join(results_root, specific_name, 'score')
 		if not os.path.isdir(submit_dir):
 			os.mkdir(submit_dir)
 		if not os.path.isdir(score_dir):
