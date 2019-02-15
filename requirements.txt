@@ -1,0 +1,8 @@
+numpy
+torch==1.0
+torchvision
+tqdm
+h5py
+csv
+sklearn
+skimage
