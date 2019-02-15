@@ -12,7 +12,23 @@ In the latest Tianchi competition, contestants will try to address the urbanizat
 
 ![figure1](img/figure1.png)
 
+## Explaination of Our Code
 
+Sinse there are five members in our team, our code is consisted of two parts.
+
+Part one contains such folders & files:
+
+- `model/`,`net/`,`npy/``
+- ``config.py`,`h5datasest_onehot.py`,`h5transform.py`,`train.py`,`getProb.py`
+
+The other part:
+
+- `modules/`,`checkpoints`
+- `config_lcz.py`,`dataloader.py`,`h5transform_lcz.py`,`predict.py`,`train_lcz.py`
+
+Our models are placed in `checkpoints/` and `model/` folders.
+
+To be simple, we only send you a small part of trained models, cause our whole model has 15G!
 
 ## Hardware & System Configuration
 
@@ -32,7 +48,47 @@ In the latest Tianchi competition, contestants will try to address the urbanizat
 
 ## Train
 
+- preprocess
 
+- Augmentation: Following augmentation techniques are performed in setting 1 during training
+
+  - Random H/V Flip
+
+  - Random Rotate
+
+  - Random Crop
+
+  - Mixup training
+
+  - | Refinement             | Top-1 |
+    | ---------------------- | ----- |
+    | standard               | 0.858 |
+    | +H/V Flip and + Rotate | 0.865 |
+    | +Random Crop           | 0.868 |
+    | +Mixup training        | 0.873 |
+    | +Cutout                | 0.873 |
+
+- Networks: the following CNN networks are mainly used
+
+  - SENet-50
+  - Densenet-101(k=12)
+  - Xception 
+  - CBAM-50
+  - ResNext-29, 32×4d
+
+- Optimization Tool
+
+  - Adam, SGD, etc.
+
+- Run
+
+  - First select your network in `net/` and `modules/`
+  - `python train.py`
+  - `python train_lcz.py`
+
+![figure2](img/figure2.jpg)
 
 ## Test
+
+bash quick.sh`
 
