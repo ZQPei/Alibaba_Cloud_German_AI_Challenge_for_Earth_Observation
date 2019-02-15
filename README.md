@@ -90,5 +90,5 @@ To be simple, we only send you a small part of trained models, cause our whole m
 
 ## Test
 
-bash quick.sh`
+`bash quick.sh`
 
