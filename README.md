@@ -14,12 +14,12 @@ In the latest Tianchi competition, contestants will try to address the urbanizat
 
 ## Explaination of Our Code
 
-Sinse there are five members in our team, our code is consisted of two parts.
+Sinse there are five members in our team, our code is composed of two parts.
 
-Part one contains such folders & files:
+Part one contains these folders & files as follows:
 
-- `model/`,`net/`,`npy/``
-- ``config.py`,`h5datasest_onehot.py`,`h5transform.py`,`train.py`,`getProb.py`
+- `model/`,`net/`,`npy/`,`data/`
+- `config.py`,`h5datasest_onehot.py`,`h5transform.py`,`train.py`,`getProb.py`,`sampleArray.py`,`1selectData.py`,`2assembleData.py`,`3assembleDataWithProb.py`
 
 The other part:
 
@@ -47,6 +47,12 @@ To be simple, we only send you a small part of trained models, cause our whole m
 `pip install -r requirements`
 
 ## Train
+
+- make new datasets:
+
+  - 1selectData: select data from validation set and training set and data indices are restored in `data/idx_selected_0204_*.npy` files.
+
+  - 2assembleData: To make full use of provided test sets, a semi-supervised knowledge distillation method is performed during semi-finals. Ensemble probability predictions on the 4 test sets (test1a, test1b, test2a and test2b) of our setting 1 and setting 2 models are used as fake labels of test data to train new single models. 
 
 - preprocess
 
