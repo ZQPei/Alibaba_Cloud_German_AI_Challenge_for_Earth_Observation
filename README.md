@@ -50,11 +50,15 @@ To be simple, we only send you a small part of trained models, cause our whole m
 
 - make new datasets:
 
+  - In code part one, we make new dataset for our training scheme.
+
   - 1selectData: select data from validation set and training set and data indices are restored in `data/idx_selected_0204_*.npy` files.
 
   - 2assembleData: To make full use of provided test sets, a semi-supervised knowledge distillation method is performed during semi-finals. Ensemble probability predictions on the 4 test sets (test1a, test1b, test2a and test2b) of our setting 1 and setting 2 models are used as fake labels of test data to train new single models. 
 
-  **Note: This process may take a while depending on your machine!**
+  - `python 2assembleData.py 1`, `python 2assembleData.py 2` to get dataset `training_0211_07_test4_1.h5` and `training_0211_07_test4_2.h5`
+
+  - **Note: This process may take a while ! It depends on your machine.**
 
 - preprocess
 

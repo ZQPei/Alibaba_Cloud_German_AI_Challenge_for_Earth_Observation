@@ -39,7 +39,7 @@ prob_test_b = readCSV(testfile_b)
 prob_test_c = readCSV(testfile_c)
 prob_test_d = readCSV(testfile_d)
 
-threshold = 0.8
+threshold = 0.7
 matched_indices_a, matched_labels_a = chooseProbThreshold(prob_test_a, threshold)
 matched_indices_b, matched_labels_b = chooseProbThreshold(prob_test_b, threshold)
 matched_indices_c, matched_labels_c = chooseProbThreshold(prob_test_c, threshold)
