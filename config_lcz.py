@@ -2,6 +2,7 @@ import os.path as osp
 
 model_root = './checkpoints'
 data_root = 'data'
+distill_root = 'data/distillation'
 specific_name = '0214'
 results_root = 'results'
 test_file = osp.join(data_root, 'round2_test_b_20190211.h5')
@@ -60,7 +61,7 @@ mean_std_test2b_file = osp.join(data_root, 'mean_std_test2b.h5')
 # 	submit_dir = osp.join(results_root, 'submit')
 # 	score_dir = osp.join(results_root, 'score2_A')
 
-SEMI_SPV = True
+SEMI_SPV = False
 ZSCORE = False
 CROP_CUTOUT = False
 USE_CLASS_WEIGHT = False
