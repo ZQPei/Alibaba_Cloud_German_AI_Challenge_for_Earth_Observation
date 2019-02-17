@@ -63,9 +63,9 @@ import ipdb; ipdb.set_trace()
 
 
 s1_set_new = np.concatenate([np.asarray(s1_val)[idx_from_val,:,:,:], np.asarray(s1_test_a)[idx_from_test_a,:,:,:], np.asarray(s1_test_b)[idx_from_test_b,:,:,:], np.asarray(s1_test_c)[idx_from_test_c,:,:,:], np.asarray(s1_test_d)[idx_from_test_d,:,:,:]], axis=0)
-s1_set_new = np.concatenate([s1_set_new, np.asarray(s1_train)[idx_from_train,:,:,:]], axis=0)
+s1_set_new = np.concatenate([s1_set_new, s1_train[idx_from_train,:,:,:]], axis=0)
 s2_set_new = np.concatenate([np.asarray(s2_val)[idx_from_val,:,:,:], np.asarray(s2_test_a)[idx_from_test_a,:,:,:], np.asarray(s2_test_b)[idx_from_test_b,:,:,:], np.asarray(s2_test_c)[idx_from_test_c,:,:,:], np.asarray(s2_test_d)[idx_from_test_d,:,:,:]], axis=0)
-s2_set_new = np.concatenate([s2_set_new, np.asarray(s2_train)[idx_from_train,:,:,:]], axis=0)
+s2_set_new = np.concatenate([s2_set_new, s2_train[idx_from_train,:,:,:]], axis=0)
 labels_set_new = np.concatenate([labels_val[idx_from_val,:], matched_labels_a, matched_labels_b, matched_labels_c, matched_labels_d, labels_train[idx_from_train,:]], axis=0)
 
 # Saving new training dataset to H5 file

@@ -54,6 +54,8 @@ To be simple, we only send you a small part of trained models, cause our whole m
 
   - 2assembleData: To make full use of provided test sets, a semi-supervised knowledge distillation method is performed during semi-finals. Ensemble probability predictions on the 4 test sets (test1a, test1b, test2a and test2b) of our setting 1 and setting 2 models are used as fake labels of test data to train new single models. 
 
+  **Note: This process may take a while depending on your machine!**
+
 - preprocess
 
 - Augmentation: Following augmentation techniques are performed in setting 1 during training
