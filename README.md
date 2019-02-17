@@ -60,6 +60,9 @@ To be simple, we only send you a small part of trained models, cause our whole m
 
   - **Note: This process may take a while ! It depends on your machine.**
 
+  - In code part two, run:  
+  `python make_soft_labeled_dataset_lcz.py` to get `soft_2a.h5`,`soft_2b.h5`,`soft_a.h5`,`soft_b.h5` files.
+
 - preprocess
 
 - Augmentation: Following augmentation techniques are performed in setting 1 during training
@@ -96,7 +99,7 @@ To be simple, we only send you a small part of trained models, cause our whole m
 
   - First select your network in `net/` and `modules/`
   - `python train.py`
-  - `python train_lcz.py`
+  - `python snapshot_train_lcz.py`
 
 ![figure2](img/figure2.jpg)
 
